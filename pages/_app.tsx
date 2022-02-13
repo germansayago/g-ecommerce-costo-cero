@@ -17,7 +17,7 @@ const App: React.FC<AppProps> = ({ Component, pageProps }) => {
           <VStack>
             <Image borderRadius={9999} src="//placehold.it/128x128"></Image>
             <Heading>Ecommerce Costo Cero</Heading>
-            <Text>Compra super fácil</Text>
+            <Text>Comprá super fácil</Text>
           </VStack>
           <Divider marginY="6"></Divider>
           <Component {...pageProps} />

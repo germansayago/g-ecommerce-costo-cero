@@ -13,6 +13,8 @@ import {
   Flex
 } from '@chakra-ui/react';
 
+import { motion, AnimatePresence, AnimateSharedLayout } from 'framer-motion';
+
 interface Props {
   products: Product[];
 }
@@ -45,60 +47,75 @@ const IndexRoute: React.FC<Props> = ({ products }) => {
   );
 
   return (
-    <Stack spacing={6}>
-      <Grid gap={6} templateColumns='repeat(auto-fill, minmax(240px, 1fr))'>
-        {products.map((product) => (
-          <Stack
-            spacing={3}
-            borderRadius='md'
-            padding={4}
-            backgroundColor='gray.100'
-            key={product.id}
-          >
-            <Box>
+    <AnimateSharedLayout>
+      <Stack spacing={6}>
+        <Grid gap={6} templateColumns='repeat(auto-fill, minmax(240px, 1fr))'>
+          {products.map((product) => (
+            <Stack
+              spacing={3}
+              borderRadius='md'
+              padding={4}
+              backgroundColor='gray.200'
+              key={product.id}
+            >
               <Image
+                cursor='pointer'
                 objectFit='cover'
+                borderTopRadius='md'
                 src={product.image}
                 alt={product.title}
               />
-            </Box>
-            <Stack spacing={1} padding={2}>
-              <Text>{product.title}</Text>
-              <Text color='primary.500' fontSize='sm' fontWeight='500'>
-                {parseCurrency(product.price)}
-              </Text>
-              s
+              <Box></Box>
+              <Stack spacing={1} padding={2}>
+                <Text>{product.title}</Text>
+                <Text color='primary.500' fontSize='sm' fontWeight='500'>
+                  {parseCurrency(product.price)}
+                </Text>
+                s
+              </Stack>
+              <Button
+                onClick={() => setCart((cart) => cart.concat(product))}
+                colorScheme={`primary`}
+                size='sm'
+              >
+                Agregar
+              </Button>
             </Stack>
-            <Button
-              onClick={() => setCart((cart) => cart.concat(product))}
-              colorScheme={`primary`}
-              size='sm'
+          ))}
+        </Grid>
+        <AnimatePresence>
+          {Boolean(cart.length) && (
+            <Flex
+              as={motion.div}
+              initial={{scale: 0}}
+              animate={{scale: 1}}
+              exit={{scale: 0}}
+              alignItems='center'
+              justifyContent='center'
+              padding={4}
+              position='sticky'
+              bottom={0}
             >
-              Agregar
-            </Button>
-          </Stack>
-        ))}
-      </Grid>
-      {Boolean(cart.length) && (
-        <Flex
-          alignItems='center'
-          justifyContent='center'
-          padding={4}
-          position='sticky'
-          bottom={0}
-        >
-          <Button
-            isExterna
-            as={Link}
-            colorScheme={'whatsapp'}
-            href={`https://wa.me/+5493586018552?text=${encodeURIComponent(text)}`}
-            width='fit-content'
-          >
-            Checkout ({cart.length}) Products
-          </Button>
-        </Flex>
-      )}
-    </Stack>
+              <Button
+                isExterna
+                as={Link}
+                colorScheme={'whatsapp'}
+                href={`https://wa.me/+5493586018552?text=${encodeURIComponent(
+                  text
+                )}`}
+                width='fit-content'
+                size='lg'
+                leftIcon={<Image src="https://icongr.am/fontawesome/whatsapp.svg?size=32&color=ffffff
+
+                " />}
+              >
+                Checkout ({cart.length}) Products
+              </Button>
+            </Flex>
+          )}
+        </AnimatePresence>
+      </Stack>
+    </AnimateSharedLayout>
   );
 };
 
