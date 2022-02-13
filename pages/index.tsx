@@ -91,7 +91,7 @@ const IndexRoute: React.FC<Props> = ({ products }) => {
             isExterna
             as={Link}
             colorScheme={'whatsapp'}
-            href={`https://wa.me/3586018552?text=${encodeURIComponent(text)}`}
+            href={`https://wa.me/+5493586018552?text=${encodeURIComponent(text)}`}
             width='fit-content'
           >
             Checkout ({cart.length}) Products
